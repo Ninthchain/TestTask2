@@ -19,20 +19,9 @@ app.UseRouting();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute (
-            name: "default", 
-            pattern:"{controller}/{action}"
-            );
-    
-    endpoints.MapControllerRoute(
-        name: "start-game",
-        pattern: "{controller}/{action}-{id1}&{id2}",
-        defaults: new
-        {
-            controller = "GameApi", 
-            action = "StartGame", 
-            id1 = args, 
-            id2 = args
-        }
+            name: "GameApi", 
+            pattern:"{controller}/{action}",
+            defaults: new {controller = "GameApi"}
     );
 });
 

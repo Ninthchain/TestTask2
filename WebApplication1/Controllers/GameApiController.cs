@@ -19,11 +19,11 @@ public class GameApiController : Controller
         return AcceptedAtRoute(new { data = DateTime.Now });
     }
     
-    [HttpHead]
+    [HttpPost]
     [Route("[action]-id1={id1}&id2={id2}")]
-    public ObjectResult StartGame(int id1, int id2)
+    public async Task<ObjectResult> StartGame(int id1, int id2)
     {
-        JsonResult result = new JsonResult("Connected successfully");
+        JsonResult result = new JsonResult("");
         
         result.StatusCode = 200;
         
@@ -36,13 +36,20 @@ public class GameApiController : Controller
 
         byte[] bytes = new byte[8];
         Generator.GetBytes(bytes);
+        
         string uuid = Convert.ToBase64String(bytes)
-            .Replace("/", "_")
-            .Replace("+", "-")
-            .Substring(0, 6);
+            .Replace("/", "")
+            .Replace("+", "")
+            .Substring(0, 10);
         
-        //Database logic to create game with current uuid
-        
+        //Database logic to create game with current params
+
+        result.Value = new
+        {
+            gameId = uuid,
+            id1Token = "X",
+            id2Token = "O"
+        };
         return Ok(result);
     }
 }
