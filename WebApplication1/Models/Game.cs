@@ -1,5 +1,4 @@
-﻿using WebApplication1.Models.Dto;
-using WebApplication1.Utilites.Crypto;
+﻿using WebApplication1.Utilites.Crypto;
 
 namespace WebApplication1.Models
 {
@@ -17,9 +16,12 @@ namespace WebApplication1.Models
         public string Id => _id;
 
 
+        public Player Player1 => _player1;
+        public Player Player2 => _player2;
+
         public Game()
         {
-            _id = GameEncrypter.GetEncryptedGameId();
+            _id = Encrypter.GetEncryptedId();
         }
     }
 }

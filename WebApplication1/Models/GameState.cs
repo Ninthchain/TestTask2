@@ -1,4 +1,4 @@
-﻿namespace WebApplication1.Models.Dto
+﻿namespace WebApplication1.Models
 {
     public class GameState
     {

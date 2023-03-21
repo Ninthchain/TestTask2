@@ -39,18 +39,7 @@ public class GameApiController : Controller
         byte[] bytes = new byte[8];
         Generator.GetBytes(bytes);
         
-        string uuid = Convert.ToBase64String(bytes)
-            .Replace("/", "")
-            .Replace("+", "")
-            .Substring(0, 10);
         
-        
-        result.Value = new
-        {
-            gameId = uuid,
-            id1Token = "X",
-            id2Token = "O"
-        };
         return Ok(result);
     }
 }

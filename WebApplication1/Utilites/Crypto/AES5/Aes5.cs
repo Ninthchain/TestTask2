@@ -10,24 +10,22 @@ namespace WebApplication1.Utilites.Crypto.Aes
         {
             MD5 keyHash = MD5.Create();
 
-            byte[] key = keyHash.ComputeHash(Encoding.ASCII.GetBytes("W6LLTN1Axb7Mj1L5s2mU1ZhTGDZcjylk"));
+            byte[] key = keyHash.ComputeHash(Encoding.ASCII.GetBytes(StringGenerator.GetRandomString(32)));
 
-            AesCryptoServiceProvider AEScryptoProvider = new()
+            using (AesCryptoServiceProvider AEScryptoProvider = new() { BlockSize = 128, KeySize = 256, Key = key})
             {
-                BlockSize = 128,
-                KeySize = 256,
+                AEScryptoProvider.GenerateIV();
 
-                Key = key
-            };
+                AEScryptoProvider.Mode = CipherMode.CBC;
+                AEScryptoProvider.Padding = PaddingMode.PKCS7;
 
-            AEScryptoProvider.GenerateIV();
+                byte[] byteData = ASCIIEncoding.ASCII.GetBytes(data);
+                byte[] encryptedData = AEScryptoProvider.CreateEncryptor(AEScryptoProvider.Key, AEScryptoProvider.IV).TransformFinalBlock(byteData, 0, byteData.Length);
 
-            AEScryptoProvider.Mode = CipherMode.CBC;
-            AEScryptoProvider.Padding = PaddingMode.PKCS7;
+                string? v = MD5.HashData(encryptedData).ToString();
 
-            byte[] byteData = ASCIIEncoding.ASCII.GetBytes(data);
-            byte[] encryptedData = AEScryptoProvider.CreateEncryptor(AEScryptoProvider.Key, AEScryptoProvider.IV).TransformFinalBlock(byteData, 0, byteData.Length);
-            return MD5.HashData(encryptedData).ToString();
+                return v;
+            }
         }
     }
 }
