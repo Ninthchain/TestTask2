@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplication1.Controllers;
 
-[Route("[controller]")]
+[Route("[controller]/")]
+[ApiController]
+
 public class GameApiController : Controller
 {
     private RandomNumberGenerator Generator = RandomNumberGenerator.Create();
@@ -42,8 +44,7 @@ public class GameApiController : Controller
             .Replace("+", "")
             .Substring(0, 10);
         
-        //Database logic to create game with current params
-
+        
         result.Value = new
         {
             gameId = uuid,
