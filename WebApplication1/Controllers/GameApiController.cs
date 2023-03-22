@@ -1,3 +1,4 @@
+using GameApi.Enum;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using WebApplication1.Data;
@@ -54,28 +55,45 @@ public class GameController : Controller
         if (game is null) return NotFound(new { });
         if (!game.Map.IsEmpty(horizontalIndex, verticalIndex)) return BadRequest(new { });
 
-        MapSlotValue value = game.CurentPlayer.Token == PlayerToken.Circle ? MapSlotValue.CircleOccupied : MapSlotValue.CrossOccupied;
-
-        game.Map.SetValue(value, horizontalIndex, verticalIndex);
+        if(game.State == GameState.TurnX)
+        {
+            game.Map.SetValue(MapSlotValue.CrossOccupied, horizontalIndex, verticalIndex);
+        }
 
         return game.Map;
     }
 
+    //I could do the real authentication to remove from http request second player id. But dont have so much time :((
+
     [HttpPost]
-    [Route("[action]/firstPlayerId={id1}")]
+    [Route("[action]/game={gameId}&joiningPlayerId={playerId}")]
+    public IActionResult Join(string gameId, string playerId)
+    {
+        Game? game = _context.Games
+                            .Where(g => g.Id.ToString() == gameId)
+                            .FirstOrDefault();
+
+        if (game is null) return NotFound();
+
+        game.SecondPlayer = new Player(playerId);
+        game.State = (GameState)new Random().Next(1, 3);
+
+        return Ok();
+    }
+
+    [HttpPost]
+    [Route("[action]/creatorId={id1}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public JsonResult CreateGame(string id1)
     {
-        Game game;
-
-        if (id1.IsNullOrEmpty() || id2.IsNullOrEmpty()) return Json(new
+        if (id1.IsNullOrEmpty()) return Json(new
         {
             error = "The player id is null",
             statusCode = BadRequest().StatusCode
         });
 
-        game = new(id1, id2);
+        Game game = new();
 
         _context.Games.Add(game);
 

@@ -12,10 +12,6 @@
 
         private string _name;
 
-        private PlayerToken _token;
-
-        public PlayerToken Token;
-
         public string Id => _id;
 
         public string Name
@@ -24,16 +20,6 @@
             protected set => _name = value; 
         }
 
-        public PlayerToken token
-        {
-            get => _token;
-            protected set => _token = value;
-        }
-
-        public Player(string id, PlayerToken token) 
-        {
-            _id = id;
-            _token = token;
-        }
+        public Player(string id) => _id = id;
     }
 }

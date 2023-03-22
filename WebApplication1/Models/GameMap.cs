@@ -42,6 +42,15 @@ namespace WebApplication1.Models
         }
 
         public bool IsEmpty(int horizontalIndex, int verticalIndex) => GetValue(horizontalIndex, verticalIndex) == MapSlotValue.Empty;
+
+        public bool IsFull()
+        {
+            for(int vertical = 0; vertical < _mapSize.Height; vertical++)
+                for(int horizontal = 0; horizontal < _mapSize.Width; horizontal++)
+                    if(IsEmpty(horizontal, vertical)) return false;
+
+            return true;
+        }
     }
 
 

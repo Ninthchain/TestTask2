@@ -1,6 +1,10 @@
 ﻿namespace GameApi.Enum
 {
-    public class GameResult
+    public enum GameResult
     {
+        NotFinished,
+        WonByX,
+        WonByO,
+        Draw,
     }
 }

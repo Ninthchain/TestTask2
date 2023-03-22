@@ -7,6 +7,6 @@
         TurnO,
         WonByX,
         WonByO,
-        Draw
+        Draw,
     }
 }

@@ -1,40 +1,34 @@
-﻿using WebApplication1.Utilites.Crypto;
+﻿using GameApi.Enum;
+using WebApplication1.Utilites.Crypto;
 
 namespace WebApplication1.Models
 {
     public class Game
     {
-        private (Player, Player) _players;
 
-        private Player _currentPlayer;
+        private Guid _id;
 
-        private string _id;
-
-        private GameState _state;
 
         private GameMap _map;
 
-        public Player CurentPlayer => _currentPlayer;
 
-        public string Id => _id;
+        public Guid Id => _id;
 
-        public GameState State => _state;
+        public GameState State { get; set; }
 
         public GameMap Map => _map;
 
-        public Game(string playerId1, string playerId2)
+        public Player FirstPlayer { get; set; }
+
+        public Player SecondPlayer { get; set; }
+
+        public Game()
         {
-            _state = new GameState();
+            State = new GameState();
             _map = new GameMap(new System.Drawing.Size(3, 3));
-
-
-            _id = Generator.GetUniqueId();
-            
-            PlayerToken first_token = (PlayerToken) new Random().Next(0, 2);
-            PlayerToken second_token = first_token == PlayerToken.Cross ? PlayerToken.Circle : PlayerToken.Cross;
-
-            _players.Item1 = new Player(playerId1, first_token);
-            _players.Item2
+            _id = Guid.NewGuid();
         }
+
+        public bool IsFull() => FirstPlayer is not null && SecondPlayer is not null;
     }
 }
