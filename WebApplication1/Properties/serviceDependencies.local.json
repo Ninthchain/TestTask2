@@ -1,14 +1,8 @@
 {
   "dependencies": {
-    "secrets1": {
-      "type": "secrets.user"
-    },
-    "mongodb1": {
-      "containerPorts": "27017:27017",
+    "mssql1": {
       "secretStore": "LocalSecretsFile",
-      "containerName": "mongodb",
-      "containerImage": "mongo",
-      "type": "mongodb.container",
+      "type": "mssql.onprem",
       "connectionId": "connectionString",
       "dynamicId": null
     }

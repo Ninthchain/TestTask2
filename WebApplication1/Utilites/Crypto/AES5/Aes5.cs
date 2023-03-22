@@ -6,17 +6,15 @@ namespace WebApplication1.Utilites.Crypto.Aes
 {
     public static class AES5
     {
-        public static string Encrypt(string data)
+        public static string Encrypt(string data, byte[] key)
         {
-            MD5 keyHash = MD5.Create();
-
-            byte[] key = keyHash.ComputeHash(Encoding.ASCII.GetBytes(StringGenerator.GetRandomString(32)));
+            
 
             using (AesCryptoServiceProvider AEScryptoProvider = new() { BlockSize = 128, KeySize = 256, Key = key})
             {
                 AEScryptoProvider.GenerateIV();
 
-                AEScryptoProvider.Mode = CipherMode.CBC;
+                AEScryptoProvider.Mode = CipherMode.CTS;
                 AEScryptoProvider.Padding = PaddingMode.PKCS7;
 
                 byte[] byteData = ASCIIEncoding.ASCII.GetBytes(data);
@@ -26,6 +24,12 @@ namespace WebApplication1.Utilites.Crypto.Aes
 
                 return v;
             }
+        }
+
+        public static byte[] GenerateKey()
+        {
+            MD5 keyHash = MD5.Create();
+            return keyHash.ComputeHash(Encoding.ASCII.GetBytes(StringGenerator.GetRandomString(32)));
         }
     }
 }

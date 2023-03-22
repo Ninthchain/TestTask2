@@ -2,8 +2,8 @@
 {
     public enum PlayerToken
     {
-        Cross,
-        Circle
+        Cross = 0,
+        Circle = 1
     }
 
     public class Player
@@ -14,24 +14,20 @@
 
         private PlayerToken _token;
 
-        public string Id 
-        { 
-            get => _id; 
+        public PlayerToken Token;
 
-            private set => _id = value; 
-            
-        }
+        public string Id => _id;
 
         public string Name
         {
             get => _name;
-            private set => _name = value; 
+            protected set => _name = value; 
         }
 
         public PlayerToken token
         {
             get => _token;
-            private set => _token = value;
+            protected set => _token = value;
         }
 
         public Player(string id, PlayerToken token) 

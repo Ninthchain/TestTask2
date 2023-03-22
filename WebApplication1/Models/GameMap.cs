@@ -19,9 +19,10 @@ namespace WebApplication1.Models
 
         private void FillMap()
         {
-            for(int i = 0; i < _mapSize.Height; i++)
-                for(int j = 0; j < _mapSize.Width; j++)
+            for (int i = 0; i < _mapSize.Height; i++)
+                for (int j = 0; j < _mapSize.Width; j++)
                     _map.SetValue(MapSlotValue.Empty, i, j);
+            
         }
 
         public GameMap(Size size)
@@ -33,7 +34,12 @@ namespace WebApplication1.Models
         }
 
         public void SetValue(MapSlotValue value, int horizontalIndex, int verticalIndex) => _map.SetValue(value, horizontalIndex, verticalIndex);
-        public MapSlotValue GetValue(int horizontalIndex, int verticalIndex) => (MapSlotValue)_map.GetValue(horizontalIndex, verticalIndex);
+
+        public MapSlotValue GetValue(int horizontalIndex, int verticalIndex)
+        {
+            MapSlotValue mapSlotValue = (MapSlotValue)_map.GetValue (horizontalIndex, verticalIndex);
+            return mapSlotValue;
+        }
 
         public bool IsEmpty(int horizontalIndex, int verticalIndex) => GetValue(horizontalIndex, verticalIndex) == MapSlotValue.Empty;
     }
