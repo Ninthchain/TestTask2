@@ -3,6 +3,7 @@ using System.Net;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers;
 
@@ -11,35 +12,36 @@ namespace WebApplication1.Controllers;
 
 public class GameApiController : Controller
 {
-    private RandomNumberGenerator Generator = RandomNumberGenerator.Create();
-    
-    [HttpHead]
-    [Route("[action]/")]
-    public async Task<AcceptedAtRouteResult> Ping()
-    {
-        Console.WriteLine("Pong");
-        return AcceptedAtRoute(new { data = DateTime.Now });
-    }
-    
-    [HttpPost]
-    [Route("[action]-id1={id1}&id2={id2}")]
-    public async Task<ObjectResult> StartGame(int id1, int id2)
-    {
-        JsonResult result = new JsonResult("");
-        
-        result.StatusCode = 200;
-        
-        if (id1 == id2)
-        {
-            result.Value = "Error: The ids must be different";
-            result.StatusCode = 400;
-            return BadRequest(result);
-        }
+    private IConfiguration _config;
 
-        byte[] bytes = new byte[8];
-        Generator.GetBytes(bytes);
+    private RandomNumberGenerator Generator = RandomNumberGenerator.Create();
+
+    public GameApiController(IConfiguration config)
+    {
+        _config = config;
+    }
+
+    [HttpGet]
+    [Route("[action]/{gameId}")]
+    public GameState GetGameState(string gameId)
+    {
+        //Finding game in a database
+        //returning the game state of found
+        throw new NotImplementedException();
+    }
+
+    [HttpPost]
+    [Route("[action]/")]
+    public MapSlotValue[,] MakeMove()
+    {
         
-        
-        return Ok(result);
+    }
+
+
+    [HttpPost]
+    [Route("[action]/createrId={id1}&invitedId={id2}")]
+    public JsonResult CreateGame(string id1, string id2)
+    {
+        Game game = new(new Player(id1), new Player(id2));
     }
 }

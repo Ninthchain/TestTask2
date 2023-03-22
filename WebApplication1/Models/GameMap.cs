@@ -5,7 +5,7 @@ namespace WebApplication1.Models
 {
     public enum MapSlotValue
     {
-        Empty = 0,
+        Empty,
         CircleOccupied = 1,
         CrossOccupied = 2
     }
@@ -13,9 +13,9 @@ namespace WebApplication1.Models
     public class GameMap
     {
         private Size _mapSize;
-        private MapSlotValue[,] _map;
 
-        public MapSlotValue[,] Map;
+        private MapSlotValue[,] _map;
+        public MapSlotValue[,] Map => _map;
 
         private void FillMap()
         {

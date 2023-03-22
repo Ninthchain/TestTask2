@@ -6,8 +6,8 @@ namespace WebApplication1.Models
     {
         private string _id;
 
-        private Player _player1;
-        private Player _player2;
+        private Player _bluePlayer;
+        private Player _redPlayer;
 
         private GameState _state;
 
@@ -16,12 +16,14 @@ namespace WebApplication1.Models
         public string Id => _id;
 
 
-        public Player Player1 => _player1;
-        public Player Player2 => _player2;
+        public Player BluePlayer => _bluePlayer;
+        public Player RedPlayer => _redPlayer;
 
-        public Game()
+        public Game(Player bluePlayer, Player redPlayer)
         {
-            _id = Encrypter.GetEncryptedId();
+            _id = GameGeneratorManager.GetUniqueId();
+            _bluePlayer = bluePlayer;
+            _redPlayer = redPlayer;
         }
     }
 }

@@ -4,9 +4,9 @@ using WebApplication1.Utilites.Crypto.Aes;
 
 namespace WebApplication1.Utilites.Crypto
 {
-    public static class Encrypter
+    public static class GameGeneratorManager
     {
-        public static string GetEncryptedId()
+        public static string GetUniqueId()
         {
             return AES5.Encrypt(StringGenerator.GetRandomString(32));
         }
